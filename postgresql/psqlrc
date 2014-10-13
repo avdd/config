@@ -1,0 +1,12 @@
+-- set search_path to public,roster,lookup;
+-- \timing
+-- \pset pager always
+
+\set HISTSIZE 99999999
+\set HISTCONTROL ignoredups
+
+\set AUTOCOMMIT off
+
+-- fancy prompty
+-- \set PROMPT1 '%[%033[1;33;40m%]%n@%/%R%[%033[0m%]%# '
+

@@ -1,0 +1,78 @@
+[ui]
+username = Adrian Dries <i@avdd.co>
+
+;style = changelog
+
+[alias]
+;stl = !$HG summary && $HG status -S
+
+[diff]
+git = True
+
+#[defaults]
+# suppress noisy extdiff header message
+#cdiff = -q
+
+[statussections]
+showmerge = 1
+
+[extensions]
+# bundled
+fetch = 
+color =
+pager =
+progress =
+rebase =
+histedit =
+hgext.graphlog =
+hgext.extdiff =
+# external
+;hgsubversion =
+;hggit =
+# own
+hgavdd =
+
+[extdiff]
+cmd.cdiff = colordiff
+opts.cdiff = -Npru
+
+[git]
+intree = 1
+
+[pager]
+pager = less -RF
+quiet = True
+attend = cd,diff,status,log,qdiff,blame,annotate,pdiff,glog,outgoing,incoming,tip,help
+
+[color]
+log.branch = red bold
+log.tag = cyan
+log.bookmark = green
+bookmarks.current = green bold
+status.modified = blue bold
+status.added = green bold
+status.removed = cyan
+status.deleted = red bold
+status.unknown = magenta bold
+status.ignored = black bold
+resolve.unresolved = white bold
+diff.diffline = yellow
+diff.extended = cyan
+diff.file_a = red 
+diff.file_b = green
+diff.hunk = magenta
+diff.deleted = red bold
+diff.inserted = green bold
+diff.changed = white bold
+diff.trailingwhitespace = bold red_background
+
+
+[tortoisehg]
+fontdiff = DejaVu Sans Mono,10,-1,5,50,0,0,0,0,0
+fontlog = DejaVu Sans Mono,10,-1,5,50,0,0,0,0,0
+fontcomment = DejaVu Sans Mono,10,-1,5,50,0,0,0,0,0
+editor = gvim
+
+[merge-tools]
+gvimdiff.args = -geom 300x100 --nofork -d -g -O $local $other $base
+

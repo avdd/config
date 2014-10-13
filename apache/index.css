@@ -1,0 +1,36 @@
+
+body {
+    font-family: monospace;
+}
+body > h1 {
+    font-size: 120%;
+}
+table {
+    border-collapse: collapse;
+}
+td {
+    padding: 0 0.5em;
+}
+td:first-child {
+    padding-right: 0;
+}
+td a {
+    display: block;
+    padding: 0.5ex 1ex;
+    text-decoration: none;
+}
+td a[href$="/"] {
+    font-weight: bold;
+}
+tr > td:first-child > img {
+    opacity: 0.5;
+}
+tr:hover td {
+    background-color: #fec;
+}
+tr:hover > td:first-child > img {
+    opacity: 1;
+}
+tr:hover td a {
+    color: black;
+}

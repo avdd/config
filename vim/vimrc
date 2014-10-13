@@ -1,0 +1,119 @@
+
+""" ordering copied from tpope 
+
+
+"" runtime path management
+
+source ~/current/config/vim/bundle/vim-pathogen/autoload/pathogen.vim
+execute pathogen#infect()
+
+"" vi/vim options
+
+"" behaviour
+
+set nocompatible    " more features
+set backspace=indent,eol,start " bs over everything in insert
+set modeline        " honour vim: lines in files
+set hidden          " hide abandoned buffers; don't close
+set history=50      " keep 50 lines of command line history
+set ignorecase      " ignore case in search pattern
+set incsearch       " do incremental searching
+set laststatus=2    " always show a statusline
+"set nobackup        " don't make a backup file
+set ruler           " show the cursor position all the time
+set shortmess+=I    " no intro on startup
+"set showbreak=+\    " string representing wrapped lines 
+set showcmd         " display incomplete commands
+set showmatch       " show matching {[()]}
+set smartcase       " ignorecase + except if the pattern contains uppercase
+"set scrolloff=999     " lines of context around cursor when scrolling
+"set wildmenu        " fancy :b tab-complete
+"set statusline=%<%f\%h%m%r%=%-20.(line=%l\ \ col=%c%V\ \ totlin=%L%)\ \ \%h%m%r%=%-40(bytval=0x%B,%n%Y%)\%P
+set splitbelow	" split below instead of above
+set splitright	" split right instead of left
+"set updatetime=1500  " delay when writing to swap
+
+set viminfo+="/0"      " forget search history
+
+"" put annoying files elsewhere
+set dir=~/.local/share/vim/swap//,~//
+" if 'backup' is on
+set backupdir=~/.local/share/vim/backup,~//
+" set 'undofile' for persistent undo
+set undodir=~/.local/share/vim/undo,~//
+
+" put viminfo in ~/.cache
+set viminfo+=n~/.cache/viminfo
+
+
+"" default formatting
+
+set autoindent      " use preceding line's indent
+set expandtab       " expand tabs to spaces (use :retab to do a whole buffer)
+set shiftwidth=4    " number of spaces for (auto)indent and <<, >>
+set softtabstop=4   " number of spaces that count as a tab
+set tabstop=8       " number of spaces a tab char displays as
+set shiftround      " <> round to multiples of shiftwidth
+set smarttab        " use shiftwidth for tabs at start of line
+"set cinkeys="0{,0},0),0#,!^F,o,O,e"
+
+
+
+"" special options
+
+"" plugin settings
+
+" bufexplorer
+let g:bufExplorerShowRelativePath=1
+let g:bufExplorerSortBy='fullpath'
+let g:bufExplorerSplitOutPathName=0
+let g:bufExplorerShowUnlisted=0
+
+" python
+let python_highlight_all = 1
+let python_version_2 = 1
+let python_slow_sync = 1
+
+"" commands
+
+"" mappings
+
+inoremap kj <esc>
+"vnoremap kj <esc>
+"inoremap <esc> <nop>
+"vnoremap <esc> <nop>
+
+"" autocommands
+
+if has("autocmd")
+    filetype plugin indent on
+    autocmd filetype text setlocal tw=72
+    autocmd bufnewfile,bufread *.mako set filetype=mako
+    autocmd bufread *.py~base.* set filetype=python
+    autocmd bufread *.py~other.* set filetype=python
+
+endif
+
+
+"" visual
+
+if has("gui_running")
+    "colo vividchalk
+    colo wombat
+    set guioptions=a
+else
+"if !has("gui_running")
+    set background=dark
+endif
+
+if (&t_Co > 2 || has("gui_running")) && has("syntax")
+    " syntax colors
+endif
+
+
+"" local
+
+if filereadable(expand("~/.vimrc.local"))
+  source ~/.vimrc.local
+endif
+
