@@ -46,6 +46,42 @@ _prompt_history_hook() {
         _backup_sync_hook
 }
 
+_sync_conflict_quick_resolve() {
+    local dir=~/log/_rsyncsync_conflicts
+    local base=${HISTFILE//$HOME\/log\//}
+    local backup=($dir/*/$base)
+    if (( ${#backup[@]} != 1 ))
+    then
+        echo 'not the usual conflict'; return 1
+    fi
+
+    # HISTFILE has reverted to an older version, and our
+    # local, new file backed up to $backup
+    # we ensure the incoming file has no new lines, then
+    # put our original 
+
+    # lines in HISTFILE not in backup
+    local diff1=$(comm -13 $backup $HISTFILE)
+    # lines in backup not in HISTFILE
+    local diff2=$(comm -23 $backup $HISTFILE)
+
+    if [ "$diff1" ]
+    then
+        echo 'non local changes'; return 1
+    fi
+
+    if [ "$diff2" ]
+    then
+        echo OK, restoring $HISTFILE
+        mv $f $HISTFILE
+    else
+        echo 'no difference'
+        rm -f "$f"
+    fi
+
+    find "$dir" -depth -type d -delete
+}
+
 _init_term() {
     # check the window size after each command and, if necessary,
     # update the values of LINES and COLUMNS.
