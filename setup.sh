@@ -6,7 +6,16 @@ shopt -s nullglob dotglob
 
 TRASH=~/backup-$(date +%Y%m%d)
 
-spec() {
+setup() {
+    case "$HOSTNAME" in
+        osake|another-desktop)
+            setup_desktop;;
+        *)
+            setup_basic;;
+    esac
+}
+
+setup_basic() {
     del .{login,logout}
     del .bash*
     del .vim*
@@ -29,6 +38,16 @@ spec() {
     link private/ssh/known_hosts .ssh
 
     mkdir -pv current/local/$HOSTNAME
+}
+
+setup_desktop() {
+    setup_basic
+
+    del Desktop Documents Downloads
+
+    ln -sfnv log/new Desktop
+    ln -sfnv log/new Documents
+    ln -sfnv .       Downloads
 }
 
 link() {
@@ -67,5 +86,5 @@ del() {
     done
 }
 
-(cd ~ && spec)
+(cd ~ && setup)
 
