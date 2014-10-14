@@ -9,7 +9,7 @@ BACKUP=~/backup-$(date +%Y%m%d)
 setup() {
     case "$HOSTNAME" in
         osake|another-desktop)
-            setup_desktop;;
+            setup_master;;
         *)
             setup_slave;;
     esac
@@ -20,12 +20,20 @@ setup_slave() {
     setup_slave_ssh
 }
 
+setup_master() {
+    setup_basic
+    setup_new_ssh
+    setup_desktop
+}
+
 setup_basic() {
     del .{login,logout}
     del .bash*
     del .vim*
+    del .profile
     del .psqlrc
     del .lesshst
+    del examples.desktop
 
     for name in profile bashrc bash_logout
     do
@@ -51,9 +59,6 @@ setup_new_ssh() {
 }
 
 setup_desktop() {
-    setup_basic
-    setup_new_ssh
-
     del Desktop Documents Downloads
 
     ln -sfnv log/new Desktop
