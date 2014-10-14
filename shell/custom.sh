@@ -47,13 +47,6 @@ _backup_flush_history() {
     history -a
 }
 
-_backup_sync_hook() {
-    _backup_sync_configured &&
-        _backup_sync_incr_counter &&
-        ! _backup_sync_locked &&
-        (_backup_sync_command_lock &)
-}
-
 _init_term() {
     # check the window size after each command and, if necessary,
     # update the values of LINES and COLUMNS.
