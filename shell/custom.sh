@@ -26,25 +26,24 @@ precmd() {
 }
 
 _prompt_history_hook() {
-    _backup_flush_history || return 1
-    test ! "$BACKUP_SYNC_COMMAND" &&
-        test -r "$MASTER_ACTIVE_FLAG" &&
-            BACKUP_SYNC_COMMAND=_run_auto_backup
+    if [[ $PRIVATE_ENV && # master
+        -r "$MASTER_ACTIVE_FLAG" && # active
+        -d ~/log/_rsyncsync_conflicts ]]
+    then
+        BACKUP_SYNC_COMMAND=
+        return 1
+    fi
+
+    history -a
+
+    if [[ "$PRIVATE_ENV" &&
+        ! "$BACKUP_SYNC_COMMAND" &&
+        -r "$MASTER_ACTIVE_FLAG" ]]
+    then
+        BACKUP_SYNC_COMMAND=_run_auto_backup
+    fi
     test "$BACKUP_SYNC_COMMAND" &&
         _backup_sync_hook
-}
-
-_backup_flush_history() {
-    if [[ -r "$MASTER_ACTIVE_FLAG" && -d ~/log/_rsyncsync_conflicts ]]
-    then
-        _deactivate_master
-        return 1
-    fi
-    if [[ -r "$PRIVATE_ENV" && ! -r "$MASTER_ACTIVE_FLAG" ]]
-    then
-        return 1
-    fi
-    history -a
 }
 
 _init_term() {
@@ -256,26 +255,38 @@ _ps1_pwd_fancy() {
 }
 
 _ps1_backup_status() {
-    local grn yel red n color count locked s
+    local grn yel red n color char locked s
     # ◯ ○ ◯ x o × x X × ⨯ ✖ ✗ ✘ ◼
-    local maru=o batsu=x dash=-
+    #local maru=o batsu=x other=+
     _coloresc red 196.b.
+    _coloresc grn 82.b.
+    _coloresc yel1 220.
+    _coloresc yel2 220.b.
     if test "$BACKUP_SYNC_COMMAND"
     then
-        _coloresc grn 82.b.
-        _coloresc yel 220.
-        _backup_sync_status count
+        # backup sync enabled, get status
+        _backup_sync_status char
         test $? -ne 0 && locked=1
-        color=$yel
-        test $count = 0 && color=$grn count=$maru
+        color=$yel1
+        test $char = 0 && color=$grn char=o
         test "$locked" && color=$red
-    elif [[ -r "$PRIVATE_ENV" && ! -r "$MASTER_ACTIVE_FLAG" ]]
+    elif [[ -r "$MASTER_ACTIVE_FLAG" ]]
     then
-        count=$batsu color=$red
+        # backup disabled by conflict
+        char=x color=$red
+    elif [[ -r "$PRIVATE_ENV" ]]
+    then
+        # master unlocked
+        char='=' color=$yel2
+    elif [[ "$PRIVATE_ENV" ]]
+    then
+        # master locked
+        char=X color=$yel2
     else
-        count=$dash color=$red
+        # slave
+        char='~' color=$yel2
     fi
-    s="$ESC_OPEN$color$ESC_CLOSE$count$ESC_OPEN$ESC_RESET$ESC_CLOSE"
+    s="$ESC_OPEN$color$ESC_CLOSE$char$ESC_OPEN$ESC_RESET$ESC_CLOSE"
     _setesc PS1_BACKUP " $s "
 }
 

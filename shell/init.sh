@@ -23,7 +23,6 @@ _init_login
 
 if shell_is_interactive && test "$BASH"
 then
-    __install_hooks
     _init_term
     _init_features
     _init_history
@@ -32,6 +31,7 @@ then
     _init_grep_colors
     _init_commands
     _init_prompt
+    __install_hooks
 
     cd .
     test "$SUDO_USER" || _greeting
