@@ -4,15 +4,20 @@
 
 shopt -s nullglob dotglob
 
-TRASH=~/backup-$(date +%Y%m%d)
+BACKUP=~/backup-$(date +%Y%m%d)
 
 setup() {
     case "$HOSTNAME" in
         osake|another-desktop)
             setup_desktop;;
         *)
-            setup_basic;;
+            setup_slave;;
     esac
+}
+
+setup_slave() {
+    setup_basic
+    setup_slave_ssh
 }
 
 setup_basic() {
@@ -21,8 +26,6 @@ setup_basic() {
     del .vim*
     del .psqlrc
     del .lesshst
-    del .ssh/*
-    test -d .ssh || del .ssh
 
     for name in profile bashrc bash_logout
     do
@@ -32,16 +35,26 @@ setup_basic() {
     link config/vim .vim
     link config/postgresql/psqlrc .psqlrc
 
+    mkdir -pv current/local/$HOSTNAME
+}
+
+setup_slave_ssh() {
+    test -L .ssh && del .ssh
+    del .ssh/*
     mkdir -pvm 0700 .ssh
     link private/ssh/config.compat .ssh/config
     link private/ssh/authorized_keys .ssh
     link private/ssh/known_hosts .ssh
+}
 
-    mkdir -pv current/local/$HOSTNAME
+setup_new_ssh() {
+    del .ssh
+    link private/ssh .ssh
 }
 
 setup_desktop() {
     setup_basic
+    setup_new_ssh
 
     del Desktop Documents Downloads
 
@@ -80,8 +93,8 @@ del() {
         then
             rm -f "$target"
         else
-            test -d "$TRASH" || mkdir -pm 0700 "$TRASH"
-            mv -v "$target" "$TRASH"
+            test -d "$BACKUP" || mkdir -pm 0700 "$BACKUP"
+            mv -v "$target" "$BACKUP"
         fi
     done
 }
