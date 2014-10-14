@@ -10,8 +10,10 @@ spec() {
     del .{login,logout}
     del .bash*
     del .vim*
-    del .ssh
     del .psqlrc
+    del .lesshst
+    del .ssh/*
+    test -d .ssh || del .ssh
 
     for name in profile bashrc bash_logout
     do
@@ -20,9 +22,32 @@ spec() {
 
     link config/vim .vim
     link config/postgresql/psqlrc .psqlrc
-    link private/ssh .ssh
+
+    mkdir -pvm 0700 .ssh
+    link private/ssh/config.compat .ssh/config
+    link private/ssh/authorized_keys .ssh
+    link private/ssh/known_hosts .ssh
 
     mkdir -pv current/local/$HOSTNAME
+}
+
+link() {
+    local target=$1
+    local link=$2
+
+    if [ -d "$link" ]
+    then
+        link=$link/$(basename $target)
+    fi
+    local linkdir=$(dirname $link)
+    local prefix=
+    while [ "$linkdir" != . ]
+    do
+        prefix=../$prefix
+        linkdir=$(dirname $linkdir)
+    done
+    target=current/$target
+    ln -sfnv $prefix$target $link
 }
 
 del() {
@@ -40,10 +65,6 @@ del() {
             mv -v "$target" "$TRASH"
         fi
     done
-}
-
-link() {
-    ln -sfnv current/$1 $2
 }
 
 (cd ~ && spec)
