@@ -21,6 +21,7 @@ _init_commands() {
     alias po=_toggle_prompt
     alias sudo=_sudo_wrapper
     alias s=_backup_sync_control
+    alias b='_encfs_backup config-targets CURRENT'
     #alias ssh=_ssh_controlmaster_wrapper
     alias unlock=_unlock_private_keys
     alias psql=_psql_wrapper
