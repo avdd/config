@@ -6,6 +6,9 @@ export LC_TIME
 _init_compat() {
     test "$HOSTNAME" || HOSTNAME=$(hostname)
     test "$UID" || UID=$(id -u)
+    # someone set us up the wrong
+    test "$HOSTNAME" = doc.modernnoise.com &&
+        HOSTNAME=doc
 }
 
 _init_local() {
