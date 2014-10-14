@@ -332,15 +332,17 @@ __unused__ps1_backup_status_unicode() {
 }
 
 _prompt_git_check() {
+    return 0
     if test -d .git
     then
-        GIT_DIR=$PWD
+        GIT_DIR=$PWD/.git
     else
         unset GIT_DIR
     fi
 }
 
 _prompt_hg_check() {
+    return 0
     if test -d .hg
     then
         HG_DIR=$PWD
