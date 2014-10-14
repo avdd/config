@@ -4,6 +4,16 @@ CONFIG_HOME=$HOME/current/config
 . $CONFIG_HOME/shell/util.sh
 . $CONFIG_HOME/shell/environment.sh
 
+if shell_is_interactive && test "$BASH"
+then
+    source_all \
+        $CONFIG_HOME/shell/modules/*.sh \
+        $CONFIG_HOME/shell/custom.sh    \
+        $CONFIG_HOME/shell/commands.sh  \
+        $CONFIG_HOME/shell/settings.sh  \
+        $CONFIG_HOME/shell/greeting.sh
+fi
+
 _init_compat
 _init_path
 _init_dirs
@@ -13,13 +23,6 @@ _init_login
 
 if shell_is_interactive && test "$BASH"
 then
-    source_all \
-        $CONFIG_HOME/shell/modules/*.sh \
-        $CONFIG_HOME/shell/custom.sh    \
-        $CONFIG_HOME/shell/commands.sh  \
-        $CONFIG_HOME/shell/settings.sh  \
-        $CONFIG_HOME/shell/greeting.sh
-
     __install_hooks
     _init_term
     _init_features
