@@ -8,7 +8,7 @@ BACKUP=~/backup-$(date +%Y%m%d)
 
 setup() {
     case "$HOSTNAME" in
-        osake|another-desktop)
+        osake|test)
             setup_master;;
         *)
             setup_slave;;
