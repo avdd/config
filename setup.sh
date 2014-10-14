@@ -34,8 +34,6 @@ setup_basic() {
 
     link config/vim .vim
     link config/postgresql/psqlrc .psqlrc
-
-    mkdir -pv current/local/$HOSTNAME
 }
 
 setup_slave_ssh() {
