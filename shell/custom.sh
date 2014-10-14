@@ -258,7 +258,7 @@ _ps1_pwd_fancy() {
 _ps1_backup_status() {
     local grn yel red n color count locked s
     # ◯ ○ ◯ x o × x X × ⨯ ✖ ✗ ✘ ◼
-    local maru=o batsu=x
+    local maru=o batsu=x dash=-
     _coloresc red 196.b.
     if test "$BACKUP_SYNC_COMMAND"
     then
@@ -269,8 +269,11 @@ _ps1_backup_status() {
         color=$yel
         test $count = 0 && color=$grn count=$maru
         test "$locked" && color=$red
-    else
+    elif [[ -r "$PRIVATE_ENV" && ! -r "$MASTER_ACTIVE_FLAG" ]]
+    then
         count=$batsu color=$red
+    else
+        count=$dash color=$red
     fi
     s="$ESC_OPEN$color$ESC_CLOSE$count$ESC_OPEN$ESC_RESET$ESC_CLOSE"
     _setesc PS1_BACKUP " $s "
