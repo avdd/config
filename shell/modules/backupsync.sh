@@ -12,6 +12,7 @@ _backup_sync_init() {
 
 _backup_sync_control() {
     _backup_sync_configured || { echo disabled; return 1; }
+    test "$SUDO_USER" && { echo sudo not allowed; return 1; }
     local arg=${1:-}
     if [[ "$arg" = @(off|0) ]]
     then
@@ -30,7 +31,7 @@ _backup_sync_hook() {
 }
 
 _backup_sync_status() {
-    _backup_sync_configured || { echo disabled; return 1; }
+    _backup_sync_configured || return 1
     local __name=$1
     _backup_sync_get_counter count
     eval "$__name=$count"
@@ -86,7 +87,7 @@ _backup_sync_unlock() {
 }
 
 _backup_sync_locked() {
-    test -f $BACKUP_SYNC_LOCKFILE
+    test "$SUDO_USER" || test -f $BACKUP_SYNC_LOCKFILE
 }
 
 _backup_sync_get_counter() {
