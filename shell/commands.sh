@@ -20,14 +20,32 @@ _init_commands() {
     alias ncp=_netcopy
     alias po=_toggle_prompt
     alias sudo=_sudo_wrapper
-    alias s=_backup_sync_control
-    alias b='_encfs_backup config-targets CURRENT'
     #alias ssh=_ssh_controlmaster_wrapper
     alias unlock=_unlock_private_keys
     alias psql=_psql_wrapper
     alias backup=_encfs_backup
+    alias s=_backup_sync_control
+    alias b=_backup_current_trigger
 }
 
+_encfs_backup() {
+    local env=$HOME/current/config/shell/init.sh
+    local script=$HOME/current/work/self/rsyncsync/rsyncsync-encfs.sh
+    BASH_ENV=$env $script "$@"
+}
+
+_backup_current_trigger() {
+    DEBUG=1 \
+        _encfs_backup config-repeat CURRENT
+}
+
+_auto_history_backup() {
+    DEBUG=1 \
+    RSYNCSYNC_MERGE_DISCARD_OLD=1 \
+    RSYNCSYNC_WRITE_STATUS=~/log/.rsyncsync/status \
+        _encfs_backup config-targets LOG \
+        &>> /tmp/backupsync.log
+}
 
 prune_empty_dirs() {
     test -d "$1" || return 1
@@ -82,13 +100,6 @@ _psql_wrapper() {
     touch $stamp
     command psql "$@"
     rm -f "$stamp"
-}
-
-_run_auto_backup() {
-    DEBUG=1 \
-    RSYNCSYNC_MERGE_DISCARD_OLD=1 \
-        _encfs_backup config-targets LOG \
-        &>> /tmp/backupsync.log
 }
 
 _diff_wrapper() {

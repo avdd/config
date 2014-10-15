@@ -40,7 +40,7 @@ _prompt_history_hook() {
         ! "$BACKUP_SYNC_COMMAND" &&
         -r "$MASTER_ACTIVE_FLAG" ]]
     then
-        BACKUP_SYNC_COMMAND=_run_auto_backup
+        BACKUP_SYNC_COMMAND=_auto_history_backup
     fi
     test "$BACKUP_SYNC_COMMAND" &&
         _backup_sync_hook
