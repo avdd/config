@@ -111,6 +111,7 @@ endif
 
 if (&t_Co > 2 || has("gui_running")) && has("syntax")
     " syntax colors
+    syntax on
 endif
 
 
