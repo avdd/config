@@ -40,7 +40,7 @@ set dir=~/.local/share/vim/swap//,~//
 " if 'backup' is on
 set backupdir=~/.local/share/vim/backup,~//
 " set 'undofile' for persistent undo
-set undodir=~/.local/share/vim/undo,~//
+"set undodir=~/.local/share/vim/undo,~//
 
 " stop netrw pooping in my home
 let g:netrw_dirhistmax = 0
