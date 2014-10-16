@@ -6,6 +6,8 @@
 \set HISTCONTROL ignoredups
 
 \set AUTOCOMMIT off
+\set ON_ERROR_STOP 1
+\set ON_ERROR_ROLLBACK 1
 
 -- fancy prompty
 -- \set PROMPT1 '%[%033[1;33;40m%]%n@%/%R%[%033[0m%]%# '
