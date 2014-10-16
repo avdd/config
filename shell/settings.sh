@@ -1,7 +1,6 @@
 
-# interactive feature settings
-
 _init_settings() {
+
     CLEAR_INCOMPLETE_LINE_ENABLED=1
     COMMAND_TITLE_ENABLED=1
     HIGHLIGHT_INPUT=1
@@ -26,8 +25,6 @@ _init_settings() {
     CLEAR_NEWLINE_COLOR=226.b.124
     CLEAR_NEWLINE_SYMBOL=↲
     #CD_BANNER_COLOR=41.b.20
-
-    # misc settings
 
     export EDITOR=vim
     export VISUAL=vim

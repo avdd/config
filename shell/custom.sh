@@ -184,7 +184,6 @@ _init_prompt() {
 
     if test "$HIGHLIGHT_INPUT"
     then
-        #_coloropt ps1_login_color color
         _coloropt ps1_login_color_$LOGIN_TYPE color
         PS2="$ESC_OPEN$ESC_RESET$ESC_CLOSE> $ESC_OPEN$color$ESC_RV$ESC_CLOSE"
     fi
@@ -208,7 +207,6 @@ _ps1_title() {
     case "$TERM" in
         vt100|xterm*|rxvt*|screen*|cygwin)
         PS1_TITLE_STATIC="$ESC_OPEN$ESC_TITLE$prefix\w$ESC_BEL$ESC_CLOSE"
-        #_setesc PS1_TITLE_STATIC "$ESC_OPEN\e]2;$LOGIN_ABBREV:\w\007$ESC_CLOSE"
         ;;
     esac
 }

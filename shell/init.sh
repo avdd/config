@@ -36,8 +36,5 @@ then
 
     cd .
     test "$SUDO_USER" || _greeting
-
-    #_test_prompt
-
 fi
 
