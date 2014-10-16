@@ -23,6 +23,7 @@ _init_login
 
 if shell_is_interactive && test "$BASH"
 then
+    _init_settings
     _init_term
     _init_features
     _init_history
