@@ -70,7 +70,13 @@ truncate_file() {
 }
 
 
+
 _psql_wrapper() {
+    if [ "$COMP_LINE" ]
+    then
+        command psql "$@";
+        return $?
+    fi
     test "$PSQL_HISTORY" || {
         echo PSQL_HISTORY not set
         return 1
