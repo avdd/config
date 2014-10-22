@@ -28,9 +28,8 @@ read_one_line() {
 }
 
 concat_string() {
-    local bit name="$1"
+    local name=$1 bit=
     shift
-    #eval "unset $name"
     eval "$name=''"
     for bit; do
         eval "$name=\"\$$name\$bit\"" 
