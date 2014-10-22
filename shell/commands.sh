@@ -105,7 +105,7 @@ _psql_wrapper() {
         return 1
 
     touch $stamp
-    command psql "$@"
+    command psql -v HISTFILE=$PSQL_HISTORY "$@"
     rm -f "$stamp"
 }
 
