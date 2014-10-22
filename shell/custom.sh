@@ -270,20 +270,25 @@ _ps1_pwd_fancy() {
     _coloropt ps1_pwd_fancy_color2 c2
 
     local pwd=${PWD/#$HOME\//'~'/}
-    pwd=(${pwd//\// })
-    test "${pwd[0]}" = '~' || pwd[0]=/${pwd[0]}
-    local n=${#pwd[@]}
-    local pad=' ' sep=
-    ((n!=1)) && sep=$PS1_PWD_FANCY_SEPARATOR
-    local color= dir= render= i=0
-    for ((i=0;i<$n; ++i))
+    local i=0 pad=' ' dir= render= sep= color=
+
+    local fancy=$PS1_PWD_FANCY_SEPARATOR
+    sep=/
+
+    pwd=${pwd#/}
+    while [[ "$pwd" = */* ]]
     do
-        ((i%2)) && color=$c2 || color=$c1
-        ((i==n-1)) && sep=''
-        dir=${pwd[i]}
-        render+="$ESC_OPEN$color$ESC_CLOSE$pad$dir$sep" 
-        pad=
+        dir=${pwd%%/*}
+        [ "$dir" = '~' ] && sep=''
+        ((i++%2)) && color=$c2 || color=$c1
+        render+="$ESC_OPEN$color$ESC_CLOSE$pad$sep$dir" 
+        pwd=${pwd#*/}
+        pad=''
+        sep=$fancy
     done
+    dir=${pwd%%/*}
+    ((i++%2)) && color=$c2 || color=$c1
+    render+="$ESC_OPEN$color$ESC_CLOSE$pad$sep$dir" 
     render+="$ESC_OPEN$c2$ESC_FILL$ESC_RESET$ESC_CLOSE"
     _setesc PS1_PWD "$render"
 }
