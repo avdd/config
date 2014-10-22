@@ -17,6 +17,8 @@ _init_commands() {
     alias c=_cd_ls
     alias diff=_diff_wrapper
     alias pwsafe=_pwsafe_wrapper
+    alias pwsafe-echo=_pwsafe_echo
+    alias pwsafe-copy=_pwsafe_copy
     alias ncp=_netcopy
     alias po=_toggle_prompt
     alias sudo=_sudo_wrapper
