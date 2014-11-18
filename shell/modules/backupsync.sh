@@ -60,7 +60,6 @@ _backup_sync_run_command() {
         _backup_sync_get_counter after
         ((after-=before))
         _backup_sync_put_counter $after
-        _backup_sync_unlock
     fi
 }
 
@@ -68,6 +67,7 @@ _backup_sync_command_lock() {
     (
         flock -n 201 || { echo 'locked'; exit 1; }
         _backup_sync_run_command
+        _backup_sync_unlock
     ) 201>$BACKUP_SYNC_LOCKFILE
 }
 
