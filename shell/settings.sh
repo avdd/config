@@ -44,5 +44,10 @@ _init_settings() {
     export LESS_TERMCAP_me=$'\e[0m' # stop bold, blink, underline
     export LESS_TERMCAP_ue=$'\e[0m' # stop underline
     export LESS_TERMCAP_se=$'\e[0m' # stop standout
+
+    export NPM_CONFIG_PREFIX=$HOME/.local
+    export NPM_CONFIG_CACHE=$HOME/.cache/npm
+    export NODE_PATH=$HOME/.local/lib/node_modules
+
 }
 
