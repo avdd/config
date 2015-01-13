@@ -117,6 +117,7 @@ _diff_wrapper() {
 }
 
 _ls_wrapper() {
+    test "$COMP_LINE" && return
     local args
     test "$LS_DIRECTORIES_FIRST" &&
         args="$args --group-directories-first"
