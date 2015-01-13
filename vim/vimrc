@@ -86,6 +86,13 @@ inoremap kj <esc>
 "inoremap <esc> <nop>
 "vnoremap <esc> <nop>
 
+nnoremap <leader>t2 :set ts=2 sts=2 sw=2<CR>
+nnoremap <leader>t3 :set ts=3 sts=4 sw=3<CR>
+nnoremap <leader>t4 :set ts=4 sts=4 sw=4<CR>
+nnoremap <leader>t8 :set ts=8 sts=8 sw=8<CR>
+nnoremap <c-b> :BufExplorer<CR>
+
+
 "" autocommands
 
 if has("autocmd")
