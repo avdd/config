@@ -20,6 +20,7 @@ set ignorecase      " ignore case in search pattern
 set incsearch       " do incremental searching
 set laststatus=2    " always show a statusline
 "set nobackup        " don't make a backup file
+"set number          " line numbers
 set ruler           " show the cursor position all the time
 set shortmess+=I    " no intro on startup
 "set showbreak=+\    " string representing wrapped lines 
@@ -34,6 +35,10 @@ set splitright	" split right instead of left
 "set updatetime=1500  " delay when writing to swap
 
 set viminfo+="/0"      " forget search history
+
+set nowrap  " scroll right instead
+" save window size/position in session
+set sessionoptions+=resize,winpos
 
 "" put annoying files elsewhere
 set dir=~/.local/share/vim/swap//,~//
@@ -90,7 +95,8 @@ nnoremap <leader>t2 :set ts=2 sts=2 sw=2<CR>
 nnoremap <leader>t3 :set ts=3 sts=4 sw=3<CR>
 nnoremap <leader>t4 :set ts=4 sts=4 sw=4<CR>
 nnoremap <leader>t8 :set ts=8 sts=8 sw=8<CR>
-nnoremap <c-b> :BufExplorer<CR>
+nnoremap <c-space> :ToggleBufExplorer<CR>
+nnoremap <c-b> :ToggleBufExplorer<CR>
 
 
 "" autocommands
@@ -111,8 +117,8 @@ if has("gui_running")
     "colo vividchalk
     colo wombat
     set guioptions=a
+    " set guifont=dejavu\ sans\ mono\ 9
 else
-"if !has("gui_running")
     set background=dark
 endif
 
