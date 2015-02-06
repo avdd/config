@@ -24,7 +24,7 @@
     func = cyan dim
     old = red bold
     new = green bold
-    commit = magenta
+    commit = yellow
     whitespace = red white
 
 [color "status"]
