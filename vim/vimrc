@@ -96,7 +96,7 @@ nnoremap <leader>t3 :set ts=3 sts=4 sw=3<CR>
 nnoremap <leader>t4 :set ts=4 sts=4 sw=4<CR>
 nnoremap <leader>t8 :set ts=8 sts=8 sw=8<CR>
 nnoremap <c-space> :ToggleBufExplorer<CR>
-nnoremap <c-b> :ToggleBufExplorer<CR>
+nnoremap <c-b> :bu<space>
 
 
 "" autocommands
