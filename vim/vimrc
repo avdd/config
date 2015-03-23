@@ -65,9 +65,13 @@ set shiftround      " <> round to multiples of shiftwidth
 set smarttab        " use shiftwidth for tabs at start of line
 "set cinkeys="0{,0},0),0#,!^F,o,O,e"
 
-
-
 "" special options
+
+"" lilypond
+filetype off
+set runtimepath+=~/.local/lilypond/usr/share/lilypond/current/vim
+
+
 
 "" plugin settings
 
