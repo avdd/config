@@ -296,5 +296,20 @@ _netcopy_put() {
     read -p "continue..."
 }
 
+_file_paper() {
+    src="$1"
+    year=$2
+    author="$3"
+    title="$4"
+    dst="$5"
+    usage="args: src year author title dst"
+    test $# -eq 5 || { echo "$usage"; return 1; }
+
+    ext="$(echo "${src##*.}")"
+    result="$year - $author - $title.$ext"
+    dst="static/music/$result"
+    mv -i "$src" "$dst"
+    go "$dst"
+}
 
 
