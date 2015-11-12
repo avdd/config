@@ -19,8 +19,10 @@ _init_local() {
 }
 
 _init_path() {
-    test -d "$HOME/.local/bin" &&
+    if [[ -d "$HOME/.local/bin" ]] && [[ $PATH != *$USER/.local/bin* ]]
+    then
         PATH="$HOME/.local/bin:$PATH" 
+    fi
     export PATH
 }
 
