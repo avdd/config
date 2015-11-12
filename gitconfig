@@ -42,3 +42,5 @@
     ; the color the no branch warning is shown in, defaulting to red
     nobranch = red
 
+[alias]
+    gl = log --graph --oneline --decorate --all
