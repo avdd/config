@@ -1,6 +1,8 @@
 
 # bash interactive commands & aliases
 
+shopt -s extglob
+
 _init_commands() {
     # shopt -s autocd # cd when using dir as command
 
@@ -27,6 +29,19 @@ _init_commands() {
     alias backup=_encfs_backup
     alias s=_backup_sync_control
     alias b=_backup_current_trigger
+    alias word=_word
+    alias vagrant=_vagrant
+}
+
+_vagrant() {
+    /opt/vagrant/bin/vagrant "$@"
+    status=$?
+    rm -rf /tmp/{vagrant,d}$(date +%Y%m%d)-+([0-9])-*
+    return $status
+}
+
+_word() {
+    grep -v '^$' ~/static/words.txt  | shuf -n 1
 }
 
 _encfs_backup() {
@@ -106,7 +121,9 @@ _psql_wrapper() {
 
     touch $stamp
     command psql -v HISTFILE=$PSQL_HISTORY "$@"
+    status=$?
     rm -f "$stamp"
+    return $status
 }
 
 _diff_wrapper() {
