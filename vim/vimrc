@@ -28,7 +28,7 @@ set showcmd         " display incomplete commands
 set showmatch       " show matching {[()]}
 set smartcase       " ignorecase + except if the pattern contains uppercase
 "set scrolloff=999     " lines of context around cursor when scrolling
-"set wildmenu        " fancy :b tab-complete
+set wildmenu        " fancy :b tab-complete
 "set statusline=%<%f\%h%m%r%=%-20.(line=%l\ \ col=%c%V\ \ totlin=%L%)\ \ \%h%m%r%=%-40(bytval=0x%B,%n%Y%)\%P
 set splitbelow	" split below instead of above
 set splitright	" split right instead of left
