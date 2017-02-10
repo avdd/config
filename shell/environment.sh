@@ -4,11 +4,14 @@ LC_TIME=en_GB.UTF-8
 export LC_TIME
 
 _init_compat() {
-    test "$HOSTNAME" || HOSTNAME=$(hostname)
+    test "$HOSTNAME" || HOSTNAME=$(hostname -s)
     test "$UID" || UID=$(id -u)
     # someone set us up the wrong
-    test "$HOSTNAME" = doc.modernnoise.com &&
-        HOSTNAME=doc
+    case "$HOSTNAME" in
+        *.modernnoise.com)
+        HOSTNAME=${HOSTNAME%%.modernnoise.com}
+        ;;
+    esac
 }
 
 _init_local() {
