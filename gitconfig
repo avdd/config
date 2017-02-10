@@ -1,7 +1,7 @@
 ; vim: filetype=gitconfig
 
 [user]
-    name = avdd
+    name = Adrian Dries
     email = i@avdd.co
 
 [core]
@@ -44,3 +44,6 @@
 
 [alias]
     gl = log --graph --oneline --decorate --all
+    st = status
+    ci = commit
+    di = diff
