@@ -24,6 +24,7 @@ pager =
 progress =
 rebase =
 histedit =
+strip =
 hgext.graphlog =
 hgext.extdiff =
 # external
@@ -45,9 +46,10 @@ quiet = True
 attend = cd,diff,status,log,qdiff,blame,annotate,pdiff,glog,outgoing,incoming,tip,help
 
 [color]
+log.changeset = black bold yellow_background
 log.branch = red bold
 log.tag = cyan
-log.bookmark = green
+log.bookmark = red bold cyan_background
 bookmarks.current = green bold
 status.modified = blue bold
 status.added = green bold
@@ -56,7 +58,7 @@ status.deleted = red bold
 status.unknown = magenta bold
 status.ignored = black bold
 resolve.unresolved = white bold
-diff.diffline = yellow
+diff.diffline = yellow bold blue_background
 diff.extended = cyan
 diff.file_a = red 
 diff.file_b = green
