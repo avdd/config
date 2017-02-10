@@ -30,14 +30,6 @@ _init_commands() {
     alias s=_backup_sync_control
     alias b=_backup_current_trigger
     alias word=_word
-    alias vagrant=_vagrant
-}
-
-_vagrant() {
-    /opt/vagrant/bin/vagrant "$@"
-    status=$?
-    rm -rf /tmp/{vagrant,d}$(date +%Y%m%d)-+([0-9])-*
-    return $status
 }
 
 _word() {
