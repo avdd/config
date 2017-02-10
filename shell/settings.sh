@@ -1,6 +1,15 @@
 
 _init_settings() {
 
+    #set -o noclobber
+
+    bind "set completion-ignore-case on"
+    bind "set completion-map-case on"
+    bind "set show-all-if-ambiguous on"
+
+    shopt -s dirspell
+    shopt -s cdspell
+
     CLEAR_INCOMPLETE_LINE_ENABLED=
     COMMAND_TITLE_ENABLED=1
     HIGHLIGHT_INPUT=1
@@ -26,6 +35,7 @@ _init_settings() {
     CLEAR_NEWLINE_SYMBOL=↲
     #CD_BANNER_COLOR=41.b.20
 
+    export PS_FORMAT=pid,user,cmd
     export EDITOR=vim
     export VISUAL=vim
     export PAGER=less

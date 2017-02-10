@@ -136,9 +136,9 @@ _init_history() {
 
     HISTSIZE=
     HISTFILESIZE=
-    HISTCONTROL=ignoreboth
+    HISTCONTROL=erasedups:ignoreboth
     # TODO: HISTIGNORE
-    # HISTIGNORE=cd:ls:etc
+    HISTIGNORE='&:[ ]*:ls:exit:history'
     HISTTIMEFORMAT='%F %T '
     HISTFILE=$HISTPATH/bash_history
     _backup_sync_init $RUNPATH
