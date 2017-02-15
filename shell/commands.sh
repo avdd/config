@@ -17,6 +17,7 @@ _init_commands() {
     alias cp='cp -i'
     alias df='df -h -x tmpfs -x devtmpfs'
     alias c=_cd_ls
+    alias grep='grep --color=auto'
     alias diff=_diff_wrapper
     alias pwsafe=_pwsafe_wrapper
     alias pwsafe-echo=_pwsafe_echo

@@ -415,7 +415,6 @@ _init_ls_colors() {
 }
 
 _init_grep_colors() {
-    export GREP_OPTIONS='--color=auto'
     local colors=(
         #:sl='48;5;90'      # matching lines
         :cx=                # context lines
