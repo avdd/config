@@ -270,10 +270,8 @@ _ps1_pwd_fancy() {
     _coloropt ps1_pwd_fancy_color2 c2
 
     local pwd=${PWD/#$HOME\//'~'/}
-    local i=0 pad=' ' dir= render= sep= color=
-
-    local fancy=$PS1_PWD_FANCY_SEPARATOR
-    sep=/
+    local i=0 pad=' ' dir= render= color=
+    local sep=/
 
     pwd=${pwd#/}
     while [[ "$pwd" = */* ]]
@@ -284,7 +282,7 @@ _ps1_pwd_fancy() {
         render+="$ESC_OPEN$color$ESC_CLOSE$pad$sep$dir" 
         pwd=${pwd#*/}
         pad=''
-        sep=$fancy
+        sep=/
     done
     dir=${pwd%%/*}
     ((i++%2)) && color=$c2 || color=$c1
