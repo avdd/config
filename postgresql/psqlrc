@@ -1,7 +1,12 @@
 -- set search_path to public,roster,lookup;
--- \timing
--- \pset pager always
 
+\set QUIET
+
+-- \pset pager always
+\timing
+-- \x auto
+
+\set COMP_KEYWORD_CASE upper
 \set HISTSIZE 99999999
 \set HISTCONTROL ignoredups
 
@@ -9,8 +14,8 @@
 \set ON_ERROR_STOP 1
 \set ON_ERROR_ROLLBACK 1
 
--- fancy prompty
+\set VERBOSITY verbose
 -- \set PROMPT1 '%[%033[1;33;40m%]%n@%/%R%[%033[0m%]%# '
 
 \pset null '⊥'
-
+\unset QUIET
