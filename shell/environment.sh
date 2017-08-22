@@ -50,7 +50,7 @@ _init_dirs() {
         [ "$runlink" = "$xdg" ] || ln -sfn "$xdg" $RUNPATH
     fi
 
-    ensure_dirs $RUNPATH $RUNPATH/ssh
+    ensure_dirs $RUNPATH $RUNPATH/ssh $RUNPATH/thumbnails
     chmod 0700 $RUNPATH/ssh
 }
 
