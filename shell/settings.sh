@@ -9,6 +9,7 @@ _init_settings() {
 
     shopt -s dirspell
     shopt -s cdspell
+    shopt -s globasciiranges
 
     CLEAR_INCOMPLETE_LINE_ENABLED=
     COMMAND_TITLE_ENABLED=1
