@@ -192,6 +192,11 @@ ditto-there() {
 }
 
 
+mkcd() {
+    mkdir -p "$1" && cd "$1"
+}
+
+
 go() {
     local x
     for x; do xdg-open "$x"; done
