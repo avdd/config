@@ -95,8 +95,9 @@ _init_term() {
     export TERM X_TERM_IS_256COLOR
 
     # assume xterm gives us nice things
-    if ! [[ $TERM = xterm* ]]
-    then
+    case "$TERM" in
+        xterm*|linux) ;;
+        *)
         COMMAND_TITLE_ENABLED=
         CLEAR_NEWLINE_COLOR=
         CLEAR_NEWLINE_SYMBOL=
@@ -104,9 +105,10 @@ _init_term() {
         PS1_ERROR_COLOR=
         LOGIN_ABBREV=$USER@$HOSTNAME
         PS1_INPUT_PROMPT='>'
-    fi
+        ;;
+    esac
 
-    _init_terminfo
+    #_init_terminfo
 }
 
 _init_terminfo() {
@@ -138,7 +140,7 @@ _init_history() {
     HISTFILESIZE=
     HISTCONTROL=erasedups:ignoreboth
     # TODO: HISTIGNORE
-    HISTIGNORE='&:[ ]*:ls:exit:history'
+    HISTIGNORE='&:[ ]*:ls:exit:history:clear'
     HISTTIMEFORMAT='%F %T '
     HISTFILE=$HISTPATH/bash_history
     _backup_sync_init $RUNPATH
@@ -162,31 +164,48 @@ _init_completion() {
 }
 
 _init_prompt() {
-    _ps1_clear
-    _ps1_title
-    _ps1_login
-    _ps1_input
+    PS1_TITLE=
+    PS1_LOGIN=
+    PS1_HIGHLIGHT=
 
+    local prefix=
+    test "$LOGIN_ABBREV" && prefix=$LOGIN_ABBREV:
+    case "$TERM" in
+        vt100|xterm*|rxvt*|screen*|cygwin)
+        PS1_TITLE="$ESC_TITLE$prefix\w$ESC_BEL"
+        ;;
+    esac
+
+    if test "$LOGIN_ABBREV"
+    then
+        local color s
+        _coloropt ps1_login_color_$LOGIN_TYPE color
+        bold=$ESC_BOLD
+        _setesc PS1_LOGIN "\[$color$bold\]$LOGIN_ABBREV\[$ESC_RESET\]"
+    fi
+
+    _setesc PS1_CLEAR "$ESC_RESET"
+    if test "$HIGHLIGHT_INPUT"
+    then
+        #_coloropt ps1_login_color_$LOGIN_TYPE color
+        PS2="$ESC_RESET> $ESC_RV"
+        _setesc PS1_HIGHLIGHT "$ESC_RV"
+    fi
+
+    # readable layout for PS1 !
     local elems=(
-        # readable layout for PS1 !
-        '$PS1_CLEAR'
-        #'$PS1_PWD_VTE'
-        "$PS1_TITLE_STATIC"
+        '\[$PS1_CLEAR\]'
+        "\\[$PS1_TITLE\\]"
         '$PS1_ERROR'
         '$PS1_PWD'
         '\n'
-        '$PS1_CLEAR'
+        '\[$PS1_CLEAR\]'
+        "$PS1_LOGIN"
         '$PS1_BACKUP'
-        '$PS1_LOGIN'
-        '$PS1_INPUT'
+        '\$ '
+        '\[$PS1_HIGHLIGHT\]'
     )
     concat_string PS1 "${elems[@]}"
-
-    if test "$HIGHLIGHT_INPUT"
-    then
-        _coloropt ps1_login_color_$LOGIN_TYPE color
-        PS2="$ESC_OPEN$ESC_RESET$ESC_CLOSE> $ESC_OPEN$color$ESC_RV$ESC_CLOSE"
-    fi
 
 }
 
@@ -194,58 +213,22 @@ _prompt_update_vars() {
     test "$PROMPT_COMMAND_ERROR" &&
         _ps1_command_error
     _ps1_pwd
-    _ps1_backup_status
+    #_ps1_backup_status
 }
 
 _setesc() {
     eval "$1=\$'$2'"
 }
 
-_ps1_title() {
-    local prefix=
-    test "$LOGIN_ABBREV" && prefix=$LOGIN_ABBREV:
-    case "$TERM" in
-        vt100|xterm*|rxvt*|screen*|cygwin)
-        PS1_TITLE_STATIC="$ESC_OPEN$ESC_TITLE$prefix\w$ESC_BEL$ESC_CLOSE"
-        ;;
-    esac
-}
-
-_ps1_clear() {
-    _setesc PS1_CLEAR "$ESC_OPEN$ESC_RESET$ESC_CLOSE"
-}
-
-_ps1_login() {
-    test "$LOGIN_ABBREV" || return
-    local color esc_start esc_end s
-    _coloropt ps1_login_color_$LOGIN_TYPE color
-    bold=$ESC_BOLD
-    esc_start="$ESC_OPEN$color$bold$ESC_CLOSE"
-    esc_end="$ESC_OPEN$ESC_RESET$ESC_CLOSE"
-    _setesc PS1_LOGIN "$esc_start$LOGIN_ABBREV$esc_end "
-}
-
-_ps1_input() {
-    local color char prefix suffix
-    _coloropt ps1_login_color_$LOGIN_TYPE color
-    char=$PS1_INPUT_PROMPT
-    prefix="$ESC_OPEN$color$ESC_CLOSE$char "
-    test "$HIGHLIGHT_INPUT" &&\
-        suffix="$ESC_OPEN$color$ESC_RV$ESC_CLOSE"
-    _setesc PS1_INPUT "$prefix$suffix"
-}
-
 _ps1_command_error() {
     local e=$COMMAND_ERROR
-    local color esc_start esc_end render
+    local color render
     if (( $e ))
     then
         [ "$PS1_ERROR_COLOR" ] &&
             _coloropt PS1_ERROR_COLOR color ||
             color='\e[1;33;41m'
-        esc_start="$ESC_OPEN$color$ESC_CLOSE"
-        esc_end="$ESC_OPEN$ESC_RESET$ESC_CLOSE"
-        render="$esc_start $e $ESC_RESET\n"
+        render="$color $e $ESC_RESET\n"
     fi
     _setesc PS1_ERROR "$render"
 
@@ -270,7 +253,7 @@ _ps1_pwd_fancy() {
     _coloropt ps1_pwd_fancy_color2 c2
 
     local pwd=${PWD/#$HOME\//'~'/}
-    local i=0 pad=' ' dir= render= color=
+    local i=0 pad='' dir= render= color=
     local sep=/
 
     pwd=${pwd#/}
@@ -279,15 +262,15 @@ _ps1_pwd_fancy() {
         dir=${pwd%%/*}
         [ "$dir" = '~' ] && sep=''
         ((i++%2)) && color=$c2 || color=$c1
-        render+="$ESC_OPEN$color$ESC_CLOSE$pad$sep$dir" 
+        render+="$color$pad$sep$dir" 
         pwd=${pwd#*/}
         pad=''
         sep=/
     done
     dir=${pwd%%/*}
     ((i++%2)) && color=$c2 || color=$c1
-    render+="$ESC_OPEN$color$ESC_CLOSE$pad$sep$dir" 
-    render+="$ESC_OPEN$c2$ESC_FILL$ESC_RESET$ESC_CLOSE"
+    render+="$color$pad$sep$dir" 
+    render+="$c2$ESC_FILL$ESC_RESET"
     _setesc PS1_PWD "$render"
 }
 
@@ -323,8 +306,8 @@ _ps1_backup_status() {
         # slave
         char='~' color=$yel2
     fi
-    s="$ESC_OPEN$color$ESC_CLOSE$char$ESC_OPEN$ESC_RESET$ESC_CLOSE"
-    _setesc PS1_BACKUP " $s "
+    s="$color$char$ESC_RESET"
+    _setesc PS1_BACKUP "$s"
 }
 
 _urlencode() {
@@ -349,7 +332,7 @@ _urlencode() {
 _ps1_vte_pwd() {
     local vte_pwd
     _urlencode vte_pwd "$PWD"
-    local esc="$ESC_OPEN\e]7;file://%s%s\a$ESC_CLOSE"
+    local esc="\e]7;file://%s%s\a"
     printf -v PS1_PWD_VTE "$esc" "${HOSTNAME:-}" "$vte_pwd"
 }
 

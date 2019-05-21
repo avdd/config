@@ -17,7 +17,7 @@ setup() {
 
 setup_slave() {
     setup_basic
-    setup_slave_ssh
+    #setup_slave_ssh
 }
 
 setup_master() {

@@ -31,7 +31,7 @@ hgext.extdiff =
 ;hgsubversion =
 ;hggit =
 # own
-hgavdd =
+;hgavdd =
 
 [extdiff]
 cmd.cdiff = colordiff
@@ -46,7 +46,7 @@ quiet = True
 attend = cd,diff,status,log,qdiff,blame,annotate,pdiff,glog,outgoing,incoming,tip,help
 
 [color]
-log.changeset = black bold yellow_background
+log.changeset = black yellow_background
 log.branch = red bold
 log.tag = cyan
 log.bookmark = red bold cyan_background
@@ -58,7 +58,7 @@ status.deleted = red bold
 status.unknown = magenta bold
 status.ignored = black bold
 resolve.unresolved = white bold
-diff.diffline = yellow bold blue_background
+diff.diffline = yellow bold
 diff.extended = cyan
 diff.file_a = red 
 diff.file_b = green

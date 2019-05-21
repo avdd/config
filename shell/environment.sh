@@ -1,7 +1,8 @@
 
 # where else can this go?
-LC_TIME=en_GB.UTF-8
+: "${LC_TIME:=en_GB.UTF-8}"
 export LC_TIME
+
 
 _init_compat() {
     test "$HOSTNAME" || HOSTNAME=$(hostname -s)
@@ -33,9 +34,9 @@ _init_dirs() {
     HISTPATH=~/log/history/$HOSTNAME
     RUNPATH=~/.local/run
     # posix mode: can't use bash expansion or arrays
+    #~/.cache    \
+    #~/.config   \
     ensure_dirs     \
-        ~/.cache    \
-        ~/.config   \
         ~/.local    \
         ~/.local/share/vim/backup   \
         ~/.local/share/vim/swap     \
@@ -66,14 +67,14 @@ _init_login() {
 
     case "$SSH_CLIENT" in
         '') type_h=local    login_h=          ;;
-        *)  type_h=remote   login_h=$HOSTNAME ;;
+        *)  type_h=remote   login_h=@$HOSTNAME ;;
     esac
 
     test $USER = root && type_u=root
 
     LOGIN_TYPE=$type_u$type_h
-    LOGIN_ABBREV=$login_u@$login_h
-    test $LOGIN_ABBREV = @ && LOGIN_ABBREV=
+    LOGIN_ABBREV=$login_u$login_h
+    #test $LOGIN_ABBREV = @ && LOGIN_ABBREV=
 }
 
 _init_private() { :; }

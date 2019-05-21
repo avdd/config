@@ -17,30 +17,30 @@
 ; normal black red green yellow blue magenta cyan white
 ; bold dim ul blink reverse
 
-[color "diff"]
-    plain = normal
-    meta = magenta
-    frag = normal dim
-    func = cyan dim
-    old = red bold
-    new = green bold
-    commit = yellow
-    whitespace = red white
+[color "branch"]
+    current = green bold reverse
+    local = blue
+    remote = yellow
+    upstream = cyan
+    plain = magenta
 
 [color "status"]
-
-    ; the header text of the status message
     header = normal dim
-    ; files which are added but not committed
+    branch = yellow reverse
     added = green bold
-    ; files which are changed but not added in the index
     changed = blue bold
-    ; files which are not tracked by Git
-    untracked = magenta bold
-    ; the current branch
-    branch = green
-    ; the color the no branch warning is shown in, defaulting to red
-    nobranch = red
+    untracked = cyan dim
+    nobranch = red white
+
+[color "diff"]
+    commit = yellow reverse
+    meta = yellow bold
+    frag = magenta
+    func = cyan dim
+    plain = normal dim
+    old = red bold
+    new = green bold
+    whitespace = red reverse
 
 [alias]
     gl = log --graph --oneline --decorate --all

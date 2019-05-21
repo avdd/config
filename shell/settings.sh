@@ -9,7 +9,7 @@ _init_settings() {
 
     shopt -s dirspell
     shopt -s cdspell
-    shopt -s globasciiranges
+    shopt -s globasciiranges 2>/dev/null
 
     CLEAR_INCOMPLETE_LINE_ENABLED=
     COMMAND_TITLE_ENABLED=1
@@ -30,7 +30,8 @@ _init_settings() {
     PS1_PWD_FANCY_COLOR1=183.240
     PS1_PWD_FANCY_COLOR2=171.238
     PS1_ERROR_COLOR=11.b.1
-    PS1_INPUT_PROMPT=▶
+    PS1_PWD_FANCY_SEPARATOR=/
+    PS1_INPUT_PROMPT='\$'
     CLEAR_NEWLINE_COLOR=226.b.124
     CLEAR_NEWLINE_SYMBOL=↲
     #CD_BANNER_COLOR=41.b.20

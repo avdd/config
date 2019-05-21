@@ -56,6 +56,7 @@ TERM vt100
 TERM xterm
 TERM xterm-16color
 TERM xterm-256color
+TERM screen.xterm-256color
 TERM xterm-88color
 TERM xterm-color
 TERM xterm-debian
@@ -71,8 +72,8 @@ TERM xterm-debian
 #FILE 00 # regular file: use no color at all
 ### compat-disabled
 ### RESET 0 # reset to "normal" color
-DIR 01;34 # directory
-#DIR 01;38;5;32
+#DIR 01;34 # directory
+DIR 01;38;5;32
 LINK 01;36 # symbolic link. (If you set this to 'target' instead of a
  # numerical value, the color is as for the file pointed to.)
 ### compat-disabled

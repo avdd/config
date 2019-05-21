@@ -1,5 +1,5 @@
 
-CONFIG_HOME=$HOME/current/config
+CONFIG_HOME=$HOME/common
 
 . $CONFIG_HOME/shell/util.sh
 . $CONFIG_HOME/shell/environment.sh
@@ -7,7 +7,10 @@ CONFIG_HOME=$HOME/current/config
 if shell_is_interactive && test "$BASH"
 then
     source_all \
-        $CONFIG_HOME/shell/modules/*.sh \
+        $CONFIG_HOME/shell/ansi.sh      \
+        $CONFIG_HOME/shell/backupsync.sh\
+        $CONFIG_HOME/shell/git.sh       \
+        $CONFIG_HOME/shell/hooks.sh     \
         $CONFIG_HOME/shell/custom.sh    \
         $CONFIG_HOME/shell/commands.sh  \
         $CONFIG_HOME/shell/settings.sh  \

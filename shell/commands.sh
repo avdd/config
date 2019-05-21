@@ -15,9 +15,10 @@ _init_commands() {
     alias mv='mv -i'
     alias rm='rm -i'
     alias cp='cp -i'
-    alias df='df -h -x tmpfs -x devtmpfs'
+    alias df='df -h -x tmpfs -x devtmpfs -x squashfs'
     alias c=_cd_ls
     alias grep='grep --color=auto'
+    alias egrep='egrep --color=auto'
     alias diff=_diff_wrapper
     alias pwsafe=_pwsafe_wrapper
     alias pwsafe-echo=_pwsafe_echo
@@ -31,6 +32,19 @@ _init_commands() {
     alias s=_backup_sync_control
     alias b=_backup_current_trigger
     alias word=_word
+    alias gist='git status'
+    alias gidi='git diff'
+    alias timestamp=_timestamp
+    alias tmpmount=_tmpmount
+    alias cl='clear -x'
+}
+
+_tmpmount() {
+    mount -t tmpfs none "$1" ; chown $USER:$USER "$1"
+}
+
+_timestamp() {
+    date "$@" '+%Y%m%d_%H%M%S'
 }
 
 _word() {
@@ -44,8 +58,7 @@ _encfs_backup() {
 }
 
 _backup_current_trigger() {
-    DEBUG=1 \
-        _encfs_backup config-repeat CURRENT
+    _encfs_backup config-repeat CURRENT
 }
 
 _auto_history_backup() {
@@ -77,8 +90,6 @@ truncate_file() {
         head -$archive "$file" > $new &&
         sed -i "1,$archive d" "$file"
 }
-
-
 
 _psql_wrapper() {
     if [ "$COMP_LINE" ]
@@ -142,7 +153,13 @@ _cd_ls() {
 
 _sudo_wrapper() {
     local sudo_prompt='[sudo] password for %p@%h: '
+    (sleep 10 && _sudo_cleanup &)
     command sudo -E -p "$sudo_prompt" "$@"
+    _sudo_cleanup
+}
+
+_sudo_cleanup() {
+    rm -f ~/.sudo_as_admin_successful
 }
 
 _toggle_prompt() {
@@ -176,11 +193,9 @@ _pwsafe_copy() {
     fi
 }
 
-
 rot13() {
     cat "$@" | tr 'a-zA-Z' 'n-za-mN-ZA-M'
 }
-
 
 # do previous command in arg/$PWD
 ditto-there() {
@@ -191,11 +206,9 @@ ditto-there() {
     (cd "$there" &&  echo -e "> $there\n> $cmd" && eval "$cmd")
 }
 
-
 mkcd() {
     mkdir -p "$1" && cd "$1"
 }
-
 
 go() {
     local x
@@ -218,7 +231,6 @@ lines() {
     cat "$arg" | tail -n+$first | head -$(($second-$first+1))
 }
 
-
 # lib functions TODO: move somewhere central
 reset-echo() {
     stty echo
@@ -232,7 +244,6 @@ read-password() {
     reset-echo
 }
 
-
 # alias for long running commands.  Use like so:
 #  sleep 10; alert
 alert() {
@@ -243,7 +254,6 @@ alert() {
     local msg="$(history|tail -n1|sed -e "$re")"
     notify-send --urgency=low -i $icon "$msg"
 }
-
 
 _netcopy() {
     local src="$1"
@@ -326,5 +336,4 @@ _file_paper() {
     mv -i "$src" "$dst"
     go "$dst"
 }
-
 
