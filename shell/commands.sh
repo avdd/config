@@ -37,6 +37,33 @@ _init_commands() {
     alias timestamp=_timestamp
     alias tmpmount=_tmpmount
     alias cl='clear -x'
+    alias mksshrsa=_mk_ssh_rsa
+    alias mksshed=_mk_ssh_ed
+}
+
+_mk_ssh_rsa() {
+    test "$1" || {
+        echo ID required
+        return 1
+    }
+    _mksshkey $1 -t rsa -b 4096
+}
+
+_mk_ssh_ed() {
+    test "$1" || {
+        echo ID required
+        return 1
+    }
+    _mksshkey $1 -t ed25519
+}
+
+_mksshkey() {
+    local id=$1
+    shift
+    local comment="$USER"-"$id"@$HOSTNAME
+    local file="$HOSTNAME"_"${id//-/_}"
+    local keystore="$HOME/.private!"
+    ssh-keygen -C "$comment" -f "$keystore/$file" "$@"
 }
 
 _tmpmount() {
