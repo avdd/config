@@ -2,7 +2,6 @@
 
 [user]
     name = Adrian Dries
-    email = i@avdd.co
 
 [core]
     pager = less -R
