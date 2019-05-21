@@ -3,6 +3,9 @@
 : "${LC_TIME:=en_GB.UTF-8}"
 export LC_TIME
 
+YEAR=$(date +%Y)
+DATE=$(date +%Y%m%d)
+HISTPATH=~/log/$YEAR/$HOSTNAME
 
 _init_compat() {
     test "$HOSTNAME" || HOSTNAME=$(hostname -s)
@@ -31,7 +34,6 @@ _init_path() {
 }
 
 _init_dirs() {
-    HISTPATH=~/log/history/$HOSTNAME
     RUNPATH=~/.local/run
     # posix mode: can't use bash expansion or arrays
     #~/.cache    \
