@@ -13,8 +13,7 @@ then
         $CONFIG_HOME/shell/hooks.sh     \
         $CONFIG_HOME/shell/custom.sh    \
         $CONFIG_HOME/shell/commands.sh  \
-        $CONFIG_HOME/shell/settings.sh  \
-        $CONFIG_HOME/shell/greeting.sh
+        $CONFIG_HOME/shell/settings.sh
 fi
 
 _init_compat
@@ -30,7 +29,6 @@ then
     _init_term
     _init_features
     _init_history
-    _init_completion
     _init_ls_colors
     _init_grep_colors
     _init_commands
@@ -38,6 +36,5 @@ then
     __install_hooks
 
     cd .
-    test "$SUDO_USER" || _greeting
 fi
 
