@@ -4,7 +4,7 @@
 "" runtime path management
 
 let g:pathogen_blacklist = []
-if v:version < '703' || !has('python')
+if v:version < '703'
     call add(g:pathogen_blacklist, 'bufexplorer')
 endif
 
