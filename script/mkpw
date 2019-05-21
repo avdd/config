@@ -1,0 +1,39 @@
+#!/usr/bin/python
+
+DEFAULT_LENGTH = 16
+
+from sys import argv
+from os import urandom
+from string import lowercase, uppercase, digits
+from random import seed, sample, shuffle, randint
+
+length = argv[1:] and int(argv[1]) or DEFAULT_LENGTH
+assert length > 4
+
+def candidate():
+    seed(urandom(8))
+    sets = [lowercase, uppercase, digits]
+    shuffle(sets)
+    seti = 0
+    result = ''
+    chars = '.-'
+
+    while True:
+        group = sets[seti]
+        partlen = randint(3,6)
+        result += ''.join(sample(group, partlen))
+        if len(result) >= length:
+            break
+        sepi = randint(0,1)
+        result += chars[sepi]
+        seti = (seti + 1) % len(sets)
+
+    result = result[:length]
+    if result[-1] in chars:
+        return candidate()
+    else:
+        return result
+
+for i in range(10):
+    print(candidate())
+
