@@ -59,11 +59,14 @@ _mk_ssh_ed() {
 
 _mksshkey() {
     local id=$1
+    test "$KEYSTORE" || {
+        echo KEYSTORE unset
+        return 1
+    }
     shift
     local comment="$USER"-"$id"@$HOSTNAME
     local file="$HOSTNAME"_"${id//-/_}"
-    local keystore="$HOME/.private!"
-    ssh-keygen -C "$comment" -f "$keystore/$file" "$@"
+    ssh-keygen -C "$comment" -f "$KEYSTORE/$file" "$@"
 }
 
 _tmpmount() {
