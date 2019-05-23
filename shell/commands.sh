@@ -39,6 +39,19 @@ _init_commands() {
     alias cl='clear -x'
     alias mksshrsa=_mk_ssh_rsa
     alias mksshed=_mk_ssh_ed
+    alias mvln=_mvln
+}
+
+_mvln() {
+    test "$1" && test "$2" || {
+        echo usage: mvln SRC DST
+        return 1
+    }
+    test -e "$2" && {
+        echo "$2 exists!"
+        return 2
+    }
+    mv -Tv "$1" "$2" && ln -sv "$2" "$1"
 }
 
 _mk_ssh_rsa() {
