@@ -155,7 +155,7 @@ _clear_terminal_color() {
     echo -en "$ESC_RESET$ESC_FILL" >&2
 }
 
-_init_completion() {
+_init_bash_completion() {
     shopt -oq posix && return 0
     source_first \
         /usr/share/bash-completion/bash_completion \
