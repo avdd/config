@@ -174,10 +174,12 @@ _psql_wrapper() {
 }
 
 _diff_wrapper() {
-    diff=diff
-    test "$HAS_COLORDIFF" &&
-        diff=colordiff
-    $diff "$@"
+    if [ "$HAS_COLORDIFF" ]
+    then
+        command diff "$@" 2>&1 | colordiff
+    else
+        command diff "$@"
+    fi
 }
 
 _ls_wrapper() {
