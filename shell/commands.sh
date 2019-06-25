@@ -83,7 +83,8 @@ _mksshkey() {
 }
 
 _tmpmount() {
-    mount -t tmpfs none "$1" ; chown $USER:$USER "$1"
+    sudo mount -t tmpfs none "$1"
+    sudo chown $USER:$USER "$1"
 }
 
 _timestamp() {
