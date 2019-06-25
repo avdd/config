@@ -41,7 +41,7 @@ _init_settings() {
     export VISUAL=vim
     export PAGER=less
     export MANPAGER=less
-    export LESS='-iXMSR'
+    export LESS='-iXMR'
     export LESSHISTFILE=- # no ~/.lesshst poop
     export PSQL_EDITOR="vi -c 'setf sql'"
     export PSQL_HISTORY="$HISTPATH/psql_history"
