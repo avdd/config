@@ -147,17 +147,19 @@ _psql_wrapper() {
     }
     # work around psql/readline bugs:
     # 1. no concurrent processes (clobbers history)
-    local stamp=$RUNPATH/psql_readline_bug
-    if test -e "$stamp"
+    local pidfile=$RUNPATH/psql.pid
+    if test -e "$pidfile"
     then
+        local shellpid=$(cat $pidfile)
         local pids
         if pids=$(pidof psql)
         then
-            echo psql running:
-            ps -f $pids
+            echo running:
+            ps $shellpid $pids
         else
-            echo found stamp but not running
-            echo remove stamp file $stamp and retry
+            echo locked by $pidfile
+            echo shellpid=$shellpid self=$$
+            ps $shellpid $$
         fi
         return 1
     fi
@@ -167,10 +169,10 @@ _psql_wrapper() {
         touch $PSQL_HISTORY ||
         return 1
 
-    touch $stamp
+    echo $$ >| $pidfile
     command psql -v HISTFILE=$PSQL_HISTORY "$@"
     status=$?
-    rm -f "$stamp"
+    rm -f "$pidfile"
     return $status
 }
 
