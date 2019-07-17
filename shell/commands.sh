@@ -156,12 +156,16 @@ _psql_wrapper() {
         then
             echo running:
             ps $shellpid $pids
+            return 1
+        elif [ $shellpid -eq $$ ]
+        then
+            rm -f "$pidfile"
         else
             echo locked by $pidfile
             echo shellpid=$shellpid self=$$
             ps $shellpid $$
+            return 2
         fi
-        return 1
     fi
 
     # 2. touch the history file to avoid spurious error
