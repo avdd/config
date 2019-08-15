@@ -42,6 +42,11 @@ _init_commands() {
     alias mvln=_mvln
 }
 
+mkkey() {
+    local n=${1:-32}
+    head -c$((n*2)) /dev/urandom | base64 -w0 | tr -d +/= | head -c $n
+}
+
 _mvln() {
     test "$1" && test "$2" || {
         echo usage: mvln SRC DST
