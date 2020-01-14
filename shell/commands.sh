@@ -221,7 +221,7 @@ _sudo_cleanup() {
     local poo=$HOME/.sudo_as_admin_successful
     if [ -f $poo ]
     then
-        rm -fv $poo
+        rm -f $poo
     fi
 }
 
