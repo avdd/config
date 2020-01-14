@@ -40,6 +40,7 @@ _init_commands() {
     alias mksshrsa=_mk_ssh_rsa
     alias mksshed=_mk_ssh_ed
     alias mvln=_mvln
+    _sudo_cleanup
 }
 
 mkkey() {
@@ -210,13 +211,18 @@ _cd_ls() {
 
 _sudo_wrapper() {
     local sudo_prompt='[sudo] password for %p@%h: '
-    (sleep 10 && _sudo_cleanup &)
     command sudo -E -p "$sudo_prompt" "$@"
+    local status=$?
     _sudo_cleanup
+    return $status
 }
 
 _sudo_cleanup() {
-    rm -f ~/.sudo_as_admin_successful
+    local poo=$HOME/.sudo_as_admin_successful
+    if [ -f $poo ]
+    then
+        rm -fv $poo
+    fi
 }
 
 _toggle_prompt() {
