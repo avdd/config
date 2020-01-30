@@ -43,6 +43,24 @@ _init_commands() {
     _sudo_cleanup
 }
 
+hist() {
+    if [ "$1" -a -f "$1" ]
+    then
+        _histfile "$1"
+    else
+        command history "$@"
+    fi
+}
+
+_histfile() {
+    (
+        unset HISTFILE
+        history -c
+        history -r "$1"
+        history
+    )
+}
+
 mkkey() {
     local n=${1:-32}
     head -c$((n*2)) /dev/urandom | base64 -w0 | tr -d +/= | head -c $n
