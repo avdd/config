@@ -207,7 +207,8 @@ _psql_wrapper() {
 _diff_wrapper() {
     if [ "$HAS_COLORDIFF" ]
     then
-        command diff "$@" 2>&1 | colordiff
+        #command diff "$@" 2>&1 | colordiff
+        command colordiff "$@"
     else
         command diff "$@"
     fi
