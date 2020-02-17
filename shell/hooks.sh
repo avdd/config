@@ -5,10 +5,10 @@ preexec() { :; }
 precmd() { :; }
 
 __preexec_trap () {
-    test "$COMP_LINE" && return
-    test "$__PREEXEC_INTERACTIVE" || return
+    if [ "${COMP_LINE:-}" ]; then return; fi
+    if [ -z "$__PREEXEC_INTERACTIVE" ]; then return; fi
     __PREEXEC_INTERACTIVE=
-    test "$BASH_COMMAND" == __prompt_command && return
+    if [ "$BASH_COMMAND" == __prompt_command ]; then return; fi
     # at this point the command is likely interactive
     preexec
 }

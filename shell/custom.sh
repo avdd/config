@@ -1,6 +1,10 @@
 
 # zsh-style hooks
 
+PRIVATE_ENV=
+MASTER_ACTIVE_FLAG=
+PS1_BACKUP=
+
 chpwd() {
     test "$GIT_PROMPT_ENABLED" &&
         _prompt_git_check
@@ -222,7 +226,7 @@ _setesc() {
 
 _ps1_command_error() {
     local e=$COMMAND_ERROR
-    local color render
+    local render= color
     if (( $e ))
     then
         [ "$PS1_ERROR_COLOR" ] &&
