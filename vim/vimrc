@@ -64,9 +64,9 @@ set viminfo=""
 
 set autoindent      " use preceding line's indent
 set expandtab       " expand tabs to spaces (use :retab to do a whole buffer)
-set shiftwidth=4    " number of spaces for (auto)indent and <<, >>
-set softtabstop=4   " number of spaces that count as a tab
-set tabstop=8       " number of spaces a tab char displays as
+set shiftwidth=2    " number of spaces for (auto)indent and <<, >>
+set softtabstop=2   " number of spaces that count as a tab
+set tabstop=2       " number of spaces a tab char displays as
 set shiftround      " <> round to multiples of shiftwidth
 set smarttab        " use shiftwidth for tabs at start of line
 "set cinkeys="0{,0},0),0#,!^F,o,O,e"
@@ -106,7 +106,7 @@ inoremap kj <esc>
 "vnoremap <esc> <nop>
 
 nnoremap <leader>t2 :set ts=2 sts=2 sw=2<CR>
-nnoremap <leader>t3 :set ts=3 sts=4 sw=3<CR>
+nnoremap <leader>t3 :set ts=3 sts=3 sw=3<CR>
 nnoremap <leader>t4 :set ts=4 sts=4 sw=4<CR>
 nnoremap <leader>t8 :set ts=8 sts=8 sw=8<CR>
 nnoremap <space> :ToggleBufExplorer<CR>
