@@ -40,7 +40,7 @@ set splitbelow	" split below instead of above
 set splitright	" split right instead of left
 "set updatetime=1500  " delay when writing to swap
 
-set nowrap  " scroll right instead
+"set nowrap  " scroll right instead
 " save window size/position in session
 set sessionoptions+=resize,winpos
 
