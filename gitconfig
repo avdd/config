@@ -42,7 +42,7 @@
     whitespace = red reverse
 
 [alias]
-    gl = log --graph --oneline --decorate --all
+    gl = log --graph --oneline --decorate
     st = status
     ci = commit
     di = diff
