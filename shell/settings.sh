@@ -4,8 +4,11 @@ _init_settings() {
     #set -o noclobber
 
     bind "set completion-ignore-case on"
-    bind "set completion-map-case on"
+    bind "set completion-map-case off"
     bind "set show-all-if-ambiguous on"
+    bind "set mark-symlinked-directories on"
+    bind '"\e[A":history-search-backward'
+    bind '"\e[B":history-search-forward'
 
     shopt -s dirspell
     shopt -s cdspell
