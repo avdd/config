@@ -9,14 +9,20 @@ _init_commands() {
     alias e=vim
     alias e='vim --servername GVIM --remote'
 
-    alias -- --='cd ~-'
-    alias ls="_ls_wrapper -lh"
-    alias lc='_ls_wrapper -CA'
+    #alias -- --='cd ~-'
+    #alias ..='cd ..'
+    alias l="_ls_wrapper -Glhp"
+    #alias ls="_ls_wrapper"
+    alias l.="_ls_wrapper -CAp"
+    alias ll="_ls_wrapper -Glhpa"
+    alias lr="_ls_wrapper -Glhpatr"
+    alias c=_cd_ls
+    alias c--='c ~-'
+    alias c..='c ..'
     alias mv='mv -i'
     alias rm='rm -i'
     alias cp='cp -i'
     alias df='df -h -x tmpfs -x devtmpfs -x squashfs'
-    alias c=_cd_ls
     alias grep='grep --color=auto'
     alias egrep='egrep --color=auto'
     alias diff=_diff_wrapper
@@ -36,7 +42,6 @@ _init_commands() {
     alias gidi='git diff'
     alias timestamp=_timestamp
     alias tmpmount=_tmpmount
-    alias cl='clear -x'
     alias mksshrsa=_mk_ssh_rsa
     alias mksshed=_mk_ssh_ed
     alias mvln=_mvln
@@ -225,7 +230,7 @@ _ls_wrapper() {
 }
 
 _cd_ls() {
-    cd "$@" && ls
+    cd "$@" && _ls_wrapper -pCA
 }
 
 _sudo_wrapper() {

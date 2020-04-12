@@ -1,12 +1,3 @@
-
-# where else can this go?
-: "${LC_TIME:=en_GB.UTF-8}"
-export LC_TIME
-
-YEAR=$(date +%Y)
-DATE=$(date +%Y%m%d)
-HISTPATH=~/log/$YEAR/$HOSTNAME
-
 _init_compat() {
     test "$HOSTNAME" || HOSTNAME=$(hostname -s)
     test "$UID" || UID=$(id -u)

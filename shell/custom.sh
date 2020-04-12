@@ -19,13 +19,13 @@ preexec() {
         _clear_terminal_color
     test "$COMMAND_TITLE_ENABLED" &&
         _set_command_title
+    history -a
 }
 
 precmd() {
     COMMAND_ERROR=$?
     test "$CLEAR_INCOMPLETE_LINE_ENABLED" &&
         insert_newline
-    _prompt_history_hook
     _prompt_update_vars
 }
 
@@ -144,7 +144,7 @@ _init_history() {
     HISTFILESIZE=
     HISTCONTROL=erasedups:ignoreboth
     # TODO: HISTIGNORE
-    HISTIGNORE='&:[ ]*:ls:exit:history:clear'
+    HISTIGNORE='&:[ ]*:ls:l:ll:reset:clear'
     HISTTIMEFORMAT='%F %T '
     HISTFILE=$HISTPATH/bash_history
     _backup_sync_init $RUNPATH

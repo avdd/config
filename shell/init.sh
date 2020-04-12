@@ -33,8 +33,7 @@ then
     _init_grep_colors
     _init_commands
     _init_prompt
-    __install_hooks
-
-    cd .
+    PROMPT_COMMAND=__prompt_command
+    trap __preexec_trap DEBUG
 fi
 
