@@ -161,7 +161,7 @@ _set_command_title() {
 }
 
 _clear_terminal_color() {
-    echo -en "$ESC_RESET$ESC_FILL" >&2
+    echo -en "$ESC_RESET$ESC_FILL" > `tty`
 }
 
 _init_bash_completion() {
