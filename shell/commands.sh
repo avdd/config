@@ -16,9 +16,9 @@ _init_commands() {
     alias l.="_ls_wrapper -CAp"
     alias ll="_ls_wrapper -Glhpa"
     alias lr="_ls_wrapper -Glhpatr"
-    alias c=_cd_ls
-    alias c--='c ~-'
-    alias c..='c ..'
+    alias cd=_cd_ls
+    alias c--='cd ~-'
+    alias c..='cd ..'
     alias mv='mv -i'
     alias rm='rm -i'
     alias cp='cp -i'
@@ -230,7 +230,7 @@ _ls_wrapper() {
 }
 
 _cd_ls() {
-    cd "$@" && _ls_wrapper -pCA
+    builtin cd "$@" && _ls_wrapper -pCA
 }
 
 _sudo_wrapper() {
