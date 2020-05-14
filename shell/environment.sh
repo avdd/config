@@ -29,6 +29,7 @@ _init_dirs() {
     # posix mode: can't use bash expansion or arrays
     #~/.cache    \
     #~/.config   \
+    [[ -d ~/_store ]] || return
     ensure_dirs     \
         ~/.local    \
         ~/.local/share/vim/backup   \
