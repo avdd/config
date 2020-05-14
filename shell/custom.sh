@@ -146,7 +146,12 @@ _init_history() {
     # TODO: HISTIGNORE
     HISTIGNORE='&:[ ]*:ls:l:ll:reset:clear'
     HISTTIMEFORMAT='%F %T '
-    HISTFILE=$HISTPATH/bash_history
+    if [[ -d $HISTPATH ]]
+    then
+      HISTFILE=$HISTPATH/bash_history
+    else
+      unset HISTFILE
+    fi
     _backup_sync_init $RUNPATH
 }
 
