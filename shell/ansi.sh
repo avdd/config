@@ -15,38 +15,14 @@ set_term_title() {
     echo -en "$ESC_TITLE$s$ESC_BEL" 1>&2
 }
 
-supports_cursor_pos() {
-    local pos
-    has_command stty || return 1
-    get_cursor_pos pos 2>/dev/null
-    test ${pos[2]} -eq 1 2>/dev/null
-}
-
-get_cursor_pos() {
-    # get cursor position in array (NULL, $line, $col)
-    # (apparently) TODO: fix read: mashing keyboard makes syntax errors
-    local name=$1
-    stty -echo
-    echo -en "$ESC_GETPOS"
-    IFS=';[' eval "read -srd R -a $name" &>/dev/null
-    local rc=$?
-    stty echo
-    return $rc
-}
-
 insert_newline() {
-    test "$(jobs)" && return # doesn't work with bg command
-    local pos sym color
-    pos[0]=''
-    get_cursor_pos pos || return
-    if ((${pos[2]} > 1))
-    then
-        [ "$CLEAR_NEWLINE_COLOR" ] &&
-            _coloresc color $CLEAR_NEWLINE_COLOR ||
-            color="$ESC_RV"
-        sym=${CLEAR_NEWLINE_SYMBOL:-%}
-        echo -e "$color$sym$ESC_RESET$ESC_FILL"
-    fi
+    local sym color s
+    [ "$CLEAR_NEWLINE_COLOR" ] &&
+        _coloresc color $CLEAR_NEWLINE_COLOR ||
+        color="$ESC_RV"
+    sym=${CLEAR_NEWLINE_SYMBOL:-%}
+    s="$color$sym$ESC_RESET$ESC_FILL"
+    printf "$s%$((COLUMNS-1))s\\r"
 }
 
 _colorcode() {
