@@ -20,7 +20,7 @@ insert_newline() {
     [ "$CLEAR_NEWLINE_COLOR" ] &&
         _coloresc color $CLEAR_NEWLINE_COLOR ||
         color="$ESC_RV"
-    sym=${CLEAR_NEWLINE_SYMBOL:-%}
+    sym=${CLEAR_NEWLINE_SYMBOL:-$}
     s="$color$sym$ESC_RESET$ESC_FILL"
     printf "$s%$((COLUMNS-1))s\\r"
 }

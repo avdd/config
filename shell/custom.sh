@@ -100,7 +100,7 @@ _init_term() {
 
     # assume xterm gives us nice things
     case "$TERM" in
-        xterm*|linux) ;;
+        *xterm*) ;;
         *)
         COMMAND_TITLE_ENABLED=
         CLEAR_NEWLINE_COLOR=
