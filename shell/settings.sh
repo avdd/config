@@ -1,3 +1,7 @@
+YEAR=$(date +%Y)
+DATE=$(date +%Y%m%d)
+HISTPATH=~/log/$YEAR/$HOSTNAME
+
 
 _init_settings() {
 
@@ -13,10 +17,6 @@ _init_settings() {
     shopt -s dirspell
     shopt -s cdspell
     shopt -s globasciiranges 2>/dev/null
-
-    YEAR=$(date +%Y)
-    DATE=$(date +%Y%m%d)
-    HISTPATH=~/log/$YEAR/$HOSTNAME
 
     CLEAR_INCOMPLETE_LINE_ENABLED=1
     COMMAND_TITLE_ENABLED=1
